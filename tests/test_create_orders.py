@@ -1,7 +1,8 @@
 import allure
 import pytest
 
-from api_methods import ApiMethods
+from api_methods import OrderMethods
+from data import OrderResponseAnswer
 from helper import generate_order
 
 
@@ -12,6 +13,6 @@ class TestCreateOrders:
         with allure.step('Запускаем ручку POST /api/v1/orders'):
             order_json = generate_order()
             order_json['colour'] = colour
-            order = ApiMethods.create_order(order_json)
-            print(order.json()['track'])
-        assert order.status_code == 201 and order.json()['track'] != 0
+            order = OrderMethods.create_order(order_json)
+        assert order.status_code == OrderResponseAnswer.CREATE_SUCCESS[0] and order.json()[
+            OrderResponseAnswer.CREATE_SUCCESS[1]] != 0
